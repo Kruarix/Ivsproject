@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.ivsserver.mapper.operatorMapper">
+
+    <insert id="addOperator" parameterType="com.example.ivsserver.entity.operator">
+        insert into operator(operator_id, name, address, phone, state, username, password)
+            value (#{operator_id},#{name},#{address},#{phone},#{state},#{username},#{password})
+    </insert>
+
+    <delete id="deleteOperator" parameterType="String">
+        delete from operator where operator_id = #{operator_id}
+    </delete>
+
+    <update id="updateOperator" parameterType="com.example.ivsserver.entity.operator">
+        update operator
+        set name = #{name},
+            address = #{address},
+            phone = #{phone},
+            state = #{state},
+            username = #{username},
+            password = #{password}
+        where operator_id = #{operator_id}
+    </update>
+
+    <select id="selectOne" parameterType="String" resultType="com.example.ivsserver.entity.operator">
+        select *
+        from operator
+        where username = #{username}
+    </select>
+
+    <select id="getInfoOperator"  resultType="com.example.ivsserver.entity.operator">
+        select * from operator
+    </select>
+
+
+
+</mapper>
