@@ -24,7 +24,7 @@
         where operator_id = #{operator_id}
     </update>
 
-    <select id="selectOne" parameterType="String" resultType="com.example.ivsserver.entity.operator">
+    <select id="selectOperator" parameterType="String" resultType="com.example.ivsserver.entity.operator">
         select *
         from operator
         where username = #{username}

@@ -29,12 +29,14 @@
               v-model="loginForm.password"
               type="password"
               autocomplete="off"
+              show-password=true
+
           />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm(LoginFormRef)"
           >登录</el-button>
-          <el-button @click="resetForm(LoginFormRef)">重置</el-button>
+          <el-button @click="">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -51,6 +53,7 @@ import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import request from "@/utils/request";
 import router from "@/router";
+import {ElMessage, ElNotification} from "element-plus";
 
 
 
@@ -75,6 +78,7 @@ const validatePassword = (rule: any, value: any, callback: any) => {
   }
 }
 
+
 const loginForm = reactive({
   username: '',
   password: ''
@@ -94,9 +98,37 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       //console.log('submit!')
 
-      request.post('/selectOne',loginForm)
+      request.post('/selectOperator',loginForm).then(res=>{
+        if(res.code === '0' ){
+          ElNotification({
+            title: '登陆成功',
+            message: '正在跳转到管理系统...',
+            type: 'success',
+            duration: 1800,
+          })
+          setTimeout(()=>{
+            //需要延迟的代码 :3秒后延迟跳转到首页，可以加提示什么的
+            router.push({
+              name:"takeOver"
+            });
+            //延迟时间
+          },1500)
+
+
+
+        }else if(res.code === '1'){
+          //alert("账号不存在，请重新输入账号")
+          ElMessage.error('账号不存在，请重新输入账号和密码')
+          resetForm(formEl);
+        }else if(res.code === '2'){
+          //alert("密码错误，请重新输入密码")
+          ElMessage.error('密码错误，请重新输入密码')
+
+        }
+      })
       //跳转
-      router.push({ name: 'home' });
+
+
 
     } else {
       console.log('error submit!')
@@ -110,6 +142,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields()
 }
 
+// register
+
 
 
 </script>
@@ -118,11 +152,15 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
 <style scoped>
 .login_container{
-
-
-  width: 99%;
-  height: 99%;
-
+  background-image: url("../assets/desk.jpg");
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 
 }
 .login_box{
@@ -131,12 +169,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
   padding-right: 50px;
   width: 350px;
   height: 200px;
-  border-radius: 3px;
+  border-radius: 10px;
   position: absolute;
-  left: 45%;
-  top: 30%;
-  background-color: whitesmoke;
-  /*transform: translate(0, 0);*/
+  left: 50%;
+  top: 40%;
+  background-color: rgba(245, 245, 245, 0.9);
+  transform: translate(-50%, -50%);
+  /*opacity: 0.5;*/
 }
 .avatar_box{
   width: 130px;

@@ -1,10 +1,6 @@
 <template>
 
-  <div>
-
-  </div>
-
-
+  默认主页
 </template>
 
 <script>

@@ -7,14 +7,17 @@
   border-radius: 10px;
 
   ">
-    <div style="height: 60px;">
-      <h1 style="float: left;margin-top: 20px;margin-left: 40px">操作员信息</h1>
+    <div style="height: 70px;width: 90%;line-height: 70px;margin: auto" >
+      <p style="font-size: 25px;font-weight: bold">操作员信息</p>
 
     </div>
-    <div style="border-bottom: 4px lightgray solid;height: 60px ;" >
-      <el-input v-model="search" placeholder="请输入关键字" size="large" style="width: 30%;position: relative;left: -345px" clearable/>
-      <el-button size="large" type="primary" style="position: relative;left: -330px" @click="load">查询</el-button>
-      <el-button type="primary" size="large" style="position: relative;left: 200px" @click="add" >创建</el-button>
+    <div style="border-bottom: 4px lightgray solid;height: 70px ;" >
+      <div style="width: 100%;margin: auto;line-height: 70px;text-align: left">
+        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>
+        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>
+        <el-button type="primary" size="large" @click="add" >创建</el-button>
+      </div>
+
     </div>
 
     <el-table

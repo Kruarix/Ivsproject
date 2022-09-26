@@ -1,54 +1,81 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from "@/views/Login";
-import Home from "@/components/Home";
 import Client from "@/views/Client";
 import Operator from "@/views/Operator";
 import PurchaseOrders from "@/views/PurchaseOrders";
 import SalesOrders from "@/views/SalesOrders";
 import Supplier from "@/views/Supplier"
 import Warehouse from "@/views/Warehouse"
+import TakeOver from "@/components/TakeOver";
+import Home from "@/views/Home";
 
 const routes = [
   {
     path: '/',
     name: 'login',
-    component: Login
+    components: {
+      LoginHome: Login
+    }
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home
+    path: '/takeOver',
+    name: 'takeOver',
+    components: {
+      LoginHome: TakeOver
+    },
+    children: [
+      {
+        path: '/client',
+        name: 'client',
+        components: {
+          MainBody: Client
+        }
+      },
+      {
+        path: '/operator',
+        name: 'operator',
+        components: {
+          MainBody: Operator
+        }
+      },
+      {
+        path: '/purchaseOrders',
+        name: 'purchaseOrders',
+        components: {
+          MainBody: PurchaseOrders
+        }
+      },
+      {
+        path: '/salesOrders',
+        name: 'salesOrders',
+        components: {
+          MainBody: SalesOrders
+        }
+      },
+      {
+        path: '/supplier',
+        name: 'supplier',
+        components: {
+          MainBody: Supplier
+        }
+      },
+      {
+        path: '/warehouse',
+        name: 'warehouse',
+        components: {
+          MainBody: Warehouse
+        }
+      },
+      {
+        path: '/home',
+        name: 'home',
+        components: {
+          MainBody: Home
+        }
+      },
+    ]
   },
-  {
-    path: '/client',
-    name: 'client',
-    component: Client
-  },
-  {
-    path: '/operator',
-    name: 'operator',
-    component: Operator
-  },
-  {
-    path: '/purchaseOrders',
-    name: 'purchaseOrders',
-    component: PurchaseOrders
-  },
-  {
-    path: '/salesOrders',
-    name: 'salesOrders',
-    component: SalesOrders
-  },
-  {
-    path: '/supplier',
-    name: 'supplier',
-    component: Supplier
-  },
-  {
-    path: '/warehouse',
-    name: 'warehouse',
-    component: Warehouse
-  },
+
 
 
 
