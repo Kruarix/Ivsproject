@@ -5,10 +5,7 @@ import com.example.ivsserver.common.Result;
 import com.example.ivsserver.entity.operator;
 import com.example.ivsserver.mapper.operatorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +28,19 @@ public class OperatorController {
             }
         return Result.success(list);
     }
+
+    @RequestMapping(value = "/deleteOperator",method = RequestMethod.GET)
+    public Result<?> deleteOperator(@RequestParam String operator_id){
+        operatorMapper.deleteOperator(operator_id);
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/updateOperator",method = RequestMethod.PUT)
+    public Result<?> updateOperator(@RequestBody operator operator){
+        operatorMapper.updateOperator(operator);
+        return Result.success();
+    }
+
 
 
 

@@ -26,12 +26,12 @@ public class LoginController {
         operatorMapper.addOperator(operator);
     }
 
-    @RequestMapping(value = "selectOne", method = RequestMethod.POST)
-    public Result<?> selectOne(@RequestBody operator operator){
+    @RequestMapping(value = "selectOperator", method = RequestMethod.POST)
+    public Result<?> selectOperator(@RequestBody operator operator){
 
         System.out.println(operator.toString());
 
-        operator operatorCheck = operatorMapper.selectOne(operator.getUsername());
+        operator operatorCheck = operatorMapper.selectOperator(operator.getUsername());
         if(operatorCheck!=null){
             return Result.success(operator);
         }

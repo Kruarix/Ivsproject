@@ -14,5 +14,5 @@ public interface clientMapper {
 
     client selectClient(String name);
 
-    List<client> getInfoOperator();
+    List<client> getInfoClient();
 }

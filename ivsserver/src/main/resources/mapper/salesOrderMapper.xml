@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ivsserver.mapper.salesOrderMapper">
+
+    <insert id="addSalesOrder" parameterType="com.example.ivsserver.entity.salesOrder">
+        insert into sales_order(sales_contract_id, sale_date, client_id, operator_id)
+            value (#{sales_contract_id},#{sale_date},#{client_id},#{operator_id})
+    </insert>
+
+    <delete id="deleteSalesOrder" parameterType="String">
+        delete from sales_order where sales_contract_id = #{sales_contract_id}
+    </delete>
+
+    <update id="updateSalesOrder" parameterType="com.example.ivsserver.entity.salesOrder">
+        update sales_order
+        set sale_date = #{sale_date},
+            client_id = #{client_id},
+            operator_id = #{operator_id}
+        where sales_contract_id = #{sales_contract_id}
+    </update>
+
+    <select id="selectSalesOrder" parameterType="String" resultType="com.example.ivsserver.entity.salesOrder">
+        select *
+        from sales_order
+        where sales_contract_id = #{sales_contract_id}
+    </select>
+
+    <select id="getInfoSalesOrder"  resultType="com.example.ivsserver.entity.salesOrder">
+        select * from sales_order
+    </select>
+
+</mapper>

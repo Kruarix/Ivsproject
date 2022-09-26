@@ -17,7 +17,7 @@ public class ClientController {
 
     @RequestMapping(value = "/getInfoClient",method = RequestMethod.GET)
     public Result<?> getInfoClient(){
-        List<client> list = clientMapper.getInfoOperator();
+        List<client> list = clientMapper.getInfoClient();
         return Result.success(list);
     }
 
@@ -33,6 +33,17 @@ public class ClientController {
         return Result.success();
     }
 
+    @RequestMapping(value = "/updateClient",method = RequestMethod.PUT)
+    public Result<?> updateClient(@RequestBody client client){
+        clientMapper.updateClient(client);
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/selectClient",method = RequestMethod.GET)
+    public Result<?> selectClient(@RequestParam String name){
+        client client = clientMapper.selectClient(name);
+        return Result.success(client);
+    }
 
 
 }

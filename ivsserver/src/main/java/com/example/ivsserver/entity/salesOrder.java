@@ -3,7 +3,7 @@ package com.example.ivsserver.entity;
 import lombok.Data;
 
 @Data
-public class sales_order {
+public class salesOrder {
 
 
     private String sales_contract_id;

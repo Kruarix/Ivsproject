@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ivsserver.mapper.purchaseMapper">
+
+    <insert id="addPurchase" parameterType="com.example.ivsserver.entity.purchase">
+        insert into purchase(purchase_contract_id, goods_id, quantity, unit_price)
+            value (#{purchase_contract_id},#{goods_id},#{quantity},#{unit_price})
+    </insert>
+
+    <delete id="deletePurchase" parameterType="String">
+        delete from purchase where purchase_contract_id = #{purchase_contract_id}
+    </delete>
+
+    <update id="updatePurchase" parameterType="com.example.ivsserver.entity.purchase">
+        update purchase
+        set goods_id = #{goods_id},
+            quantity = #{quantity},
+            unit_price = #{unit_price}
+        where purchase_contract_id = #{purchase_contract_id}
+    </update>
+
+    <select id="selectPurchase" parameterType="String" resultType="com.example.ivsserver.entity.purchase">
+        select *
+        from purchase
+        where purchase_contract_id = #{purchase_contract_id}
+    </select>
+
+    <select id="getInfoPurchase"  resultType="com.example.ivsserver.entity.purchase">
+        select * from purchase
+    </select>
+
+</mapper>
