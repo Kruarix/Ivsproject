@@ -1,16 +1,14 @@
 package com.example.ivsserver.controller;
 
 import com.example.ivsserver.common.Result;
+import com.example.ivsserver.common.RngUtil;
 import com.example.ivsserver.entity.supplier;
 import com.example.ivsserver.mapper.supplierMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
 public class supplierController {
 
     @Autowired
@@ -24,6 +22,17 @@ public class supplierController {
 
     @RequestMapping(value = "/addSupplier",method = RequestMethod.POST)
     public Result<?> addSupplier(@RequestBody supplier supplier){
+        //随机ID生成检测
+        String Check;
+        while(true){
+            Check = RngUtil.randomAlphabetic();
+            supplier supplierCheck = supplierMapper.selectSupplier(Check);
+            if(supplierCheck==null){
+                break;
+            }
+        }
+        supplier.setSupplier_id(Check);
+
         supplierMapper.addSupplier(supplier);
         return Result.success();
     }

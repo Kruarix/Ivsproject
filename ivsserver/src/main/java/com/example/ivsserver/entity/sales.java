@@ -7,6 +7,6 @@ public class sales {
 
     private String sales_contract_id;
     private String goods_id;
-    private int quantity;
+    private int count;
     private double unit_price;
 }

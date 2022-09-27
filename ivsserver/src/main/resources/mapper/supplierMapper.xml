@@ -4,8 +4,8 @@
 <mapper namespace="com.example.ivsserver.mapper.supplierMapper">
 
     <insert id="addSupplier" parameterType="com.example.ivsserver.entity.supplier">
-        insert into supplier(supplier_id, name, address, phone)
-            value (#{supplier_id},#{name},#{address},#{phone})
+        insert into supplier(supplier_id, supplier_name, supplier_address, supplier_phone)
+            value (#{supplier_id},#{supplier_name},#{supplier_address},#{supplier_phone})
     </insert>
 
     <delete id="deleteSupplier" parameterType="String">
@@ -14,16 +14,16 @@
 
     <update id="updateSupplier" parameterType="com.example.ivsserver.entity.supplier">
         update supplier
-        set name = #{name},
-            address = #{address},
-            phone = #{phone}
+        set supplier_name = #{supplier_name},
+            supplier_address = #{supplier_address},
+            supplier_phone = #{supplier_phone}
         where supplier_id = #{supplier_id}
     </update>
 
     <select id="selectSupplier" parameterType="String" resultType="com.example.ivsserver.entity.supplier">
         select *
         from supplier
-        where name = #{name}
+        where supplier_name = #{supplier_name}
     </select>
 
     <select id="getInfoSupplier"  resultType="com.example.ivsserver.entity.supplier">

@@ -5,8 +5,8 @@
 <mapper namespace="com.example.ivsserver.mapper.operatorMapper">
 
     <insert id="addOperator" parameterType="com.example.ivsserver.entity.operator">
-        insert into operator(operator_id, name, address, phone, state, username, password)
-            value (#{operator_id},#{name},#{address},#{phone},#{state},#{username},#{password})
+        insert into operator(operator_id, operator_name, operator_address, operator_phone, state, username, password)
+            value (#{operator_id},#{operator_name},#{operator_address},#{operator_phone},#{state},#{username},#{password})
     </insert>
 
     <delete id="deleteOperator" parameterType="String">
@@ -15,9 +15,9 @@
 
     <update id="updateOperator" parameterType="com.example.ivsserver.entity.operator">
         update operator
-        set name = #{name},
-            address = #{address},
-            phone = #{phone},
+        set operator_name = #{operator_name},
+            operator_address = #{operator_address},
+            operator_phone = #{operator_phone},
             state = #{state},
             username = #{username},
             password = #{password}

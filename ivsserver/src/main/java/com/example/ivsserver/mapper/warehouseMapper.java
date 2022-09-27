@@ -12,7 +12,7 @@ public interface warehouseMapper {
 
     void updateWarehouse(warehouse warehouse);
 
-    warehouse selectWarehouse(String name);
+    warehouse selectWarehouse(String goods_name);
 
     List<warehouse> getInfoWarehouse();
 

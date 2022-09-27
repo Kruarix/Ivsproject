@@ -6,9 +6,9 @@ import lombok.Data;
 public class supplier {
 
     private String supplier_id;
-    private String name;
-    private String address;
-    private String phone;
+    private String supplier_name;
+    private String supplier_address;
+    private String supplier_phone;
 
 
 }

@@ -4,8 +4,8 @@
 
 <mapper namespace="com.example.ivsserver.mapper.clientMapper">
     <insert id="addClient" parameterType="com.example.ivsserver.entity.client">
-        insert into client(client_id, name, address, phone)
-            value (#{client_id},#{name},#{address},#{phone})
+        insert into client(client_id, client_name, client_address, client_phone)
+            value (#{client_id},#{client_name},#{client_address},#{client_phone})
     </insert>
 
     <delete id="deleteClient" parameterType="String">
@@ -14,16 +14,16 @@
 
     <update id="updateClient" parameterType="com.example.ivsserver.entity.client">
         update client
-        set name = #{name},
-            address = #{address},
-            phone = #{phone}
+        set client_name = #{client_name},
+            client_address = #{client_address},
+            client_phone = #{client_phone}
         where client_id = #{client_id}
     </update>
 
     <select id="selectClient" parameterType="String" resultType="com.example.ivsserver.entity.client">
         select *
         from client
-        where name = #{name}
+        where client_name = #{client_name}
     </select>
 
     <select id="getInfoClient"  resultType="com.example.ivsserver.entity.client">

@@ -26,8 +26,8 @@
         where purchase_contract_id = #{purchase_contract_id}
     </select>
 
-    <select id="getInfoPurchase"  resultType="com.example.ivsserver.entity.purchase">
-        select * from purchase
-    </select>
+<!--    <select id="getInfoPurchase"  resultType="com.example.ivsserver.entity.purchase">-->
+<!--        select * from purchase-->
+<!--    </select>-->
 
 </mapper>

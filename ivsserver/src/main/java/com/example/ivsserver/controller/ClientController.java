@@ -2,6 +2,7 @@ package com.example.ivsserver.controller;
 
 
 import com.example.ivsserver.common.Result;
+import com.example.ivsserver.common.RngUtil;
 import com.example.ivsserver.entity.client;
 import com.example.ivsserver.mapper.clientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,17 @@ public class ClientController {
 
     @RequestMapping(value = "/addClient",method = RequestMethod.POST)
     public Result<?> addClient(@RequestBody client client){
+        //随机ID生成检测
+        String Check;
+        while(true){
+            Check = RngUtil.randomAlphabetic();
+            client clientCheck = clientMapper.selectClient(Check);
+            if(clientCheck==null){
+                break;
+            }
+        }
+        client.setClient_id(Check);
+
         clientMapper.addClient(client);
         return Result.success();
     }

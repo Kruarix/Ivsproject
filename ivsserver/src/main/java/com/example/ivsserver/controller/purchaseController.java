@@ -4,13 +4,11 @@ import com.example.ivsserver.common.Result;
 import com.example.ivsserver.entity.purchase;
 import com.example.ivsserver.mapper.purchaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class purchaseController {
 
 
@@ -18,11 +16,7 @@ public class purchaseController {
     purchaseMapper purchaseMapper;
 
 
-    @RequestMapping(value = "/getInfoPurchase",method = RequestMethod.GET)
-    public Result<?> getInfoPurchase(){
-        List<purchase> list = purchaseMapper.getInfoPurchase();
-        return Result.success(list);
-    }
+
 
     @RequestMapping(value = "/addPurchase",method = RequestMethod.POST)
     public Result<?> addPurchase(@RequestBody purchase purchase){

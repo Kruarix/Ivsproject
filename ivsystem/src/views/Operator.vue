@@ -7,7 +7,8 @@
   border-radius: 10px;
 
   ">
-    <div style="height: 70px;width: 90%;line-height: 70px;margin: auto" >
+
+    <div style="height: 50px;width: 90%;line-height: 50px;margin: auto" >
       <p style="font-size: 25px;font-weight: bold">操作员信息</p>
 
     </div>
@@ -24,41 +25,39 @@
         :data="tableData"
         style="width: 100%"
     >
-      <el-table-column prop="operator_id" label="编号" width="100" />
-      <el-table-column prop="name" label="操作员名称"  />
-      <el-table-column prop="address" label="操作员地址" />
-      <el-table-column prop="phone" label="操作员电话" width="200"/>
+      <el-table-column prop="operator_id" label="编号" width="200" />
+      <el-table-column prop="operator_name" label="操作员名称"  />
+      <el-table-column prop="operator_address" label="操作员地址" />
+      <el-table-column prop="operator_phone" label="操作员电话" width="200"/>
       <el-table-column prop="state" label="操作员状态" width="200" />
 
 
     </el-table>
 
 
-<!--    <el-dialog
+    <el-dialog
         v-model="dialogVisible"
         title="操作员信息"
         width="30%"
 
     >
-      <el-form  :model="operatorForm" label-width="120px">
+      <el-form  :model="form" label-width="120px">
         <el-form-item label="操作员名称">
-          <el-input v-model="operatorForm.name" />
+          <el-input v-model="form.operator_name" />
         </el-form-item>
         <el-form-item label="操作员地址">
-          <el-input v-model="operatorForm.address" />
+          <el-input v-model="form.operator_address" />
         </el-form-item>
         <el-form-item label="操作员电话">
-          <el-input v-model="operatorForm.phone" />
+          <el-input v-model="form.operator_phone" />
         </el-form-item>
         <el-form-item label="操作员状态">
-          <el-input v-model="operatorForm.state" />
+          <el-radio-group v-model="form.state">
+            <el-radio-button label="启用" />
+            <el-radio-button label="停用" />
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="操作员用户名">
-          <el-input v-model="form.telephone" />
-        </el-form-item>
-        <el-form-item label="操作员密码">
-          <el-input v-model="form.telephone" />
-        </el-form-item>
+
 
       </el-form>
       <template #footer>
@@ -67,9 +66,7 @@
         <el-button type="primary" @click="save">确认</el-button>
       </span>
       </template>
-    </el-dialog>-->
-
-
+    </el-dialog>
 
   </div>
 
@@ -82,13 +79,12 @@ import request from "@/utils/request";
 export default {
     data(){
       return {
-        operatorForm:{
+        form:{
           operator_id:"",
-          name:"",
-          address:"",
-          phone:"",
-
-
+          operator_name:"",
+          operator_address:"",
+          operator_phone:"",
+          state:"",
         },
         dialogVisible : false,
         search: '',
@@ -109,8 +105,8 @@ export default {
 
       },
       save(){
-        if(this.operatorForm.operator_id){  //更新
-          request.put('/client_infomation',this.form).then(res =>{
+        if(this.form.operator_id){  //更新
+          request.put('/updateOperator',this.form).then(res =>{
             console.log(res)
             if(res.code === '0'){
               this.$message({
@@ -123,10 +119,11 @@ export default {
                 message: res.msg
               })
             }
+            this.load()
           })
-          this.load()
+
         }else{
-          request.post('/client_infomation',this.form).then(res =>{
+          request.post('/addOperator',this.form).then(res =>{
             console.log(res)
             if(res.code === '0'){
               this.$message({
@@ -139,8 +136,9 @@ export default {
                 message: res.msg
               })
             }
+            this.load()
           })
-          this.load()
+
         }
         this.dialogVisible = false
       },
@@ -149,7 +147,6 @@ export default {
           params: {
             search: this.search
           }
-
         }).then(res=>{
           this.tableData = res.data
         })
@@ -158,9 +155,12 @@ export default {
         this.form = JSON.parse(JSON.stringify(row))
         this.dialogVisible = true;
       },
-      handleDelete(clientNo){
-        console.log(clientNo)
-        request.delete("/client_infomation/" + clientNo).then(res=>{
+      handleDelete(operator_id){
+        console.log(operator_id)
+        request.get("/deleteOperator",{
+          params:
+              {operator_id: operator_id}
+        }).then(res=>{
               if(res.code === '0'){
                 this.$message({
                   type: "success",
@@ -172,8 +172,9 @@ export default {
                   message: res.msg
                 })
               }
+          this.load()
             })
-        this.load()
+
 
       },
 

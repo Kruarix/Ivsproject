@@ -12,7 +12,7 @@ public interface supplierMapper {
 
     void updateSupplier(supplier supplier);
 
-    supplier selectSupplier(String name);
+    supplier selectSupplier(String supplier_name);
 
     List<supplier> getInfoSupplier();
 }

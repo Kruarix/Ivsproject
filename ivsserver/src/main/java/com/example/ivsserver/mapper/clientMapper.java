@@ -12,7 +12,7 @@ public interface clientMapper {
 
     void updateClient(client client);
 
-    client selectClient(String name);
+    client selectClient(String client_name);
 
     List<client> getInfoClient();
 }

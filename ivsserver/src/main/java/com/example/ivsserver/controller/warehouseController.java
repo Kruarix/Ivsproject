@@ -1,16 +1,15 @@
 package com.example.ivsserver.controller;
 
 import com.example.ivsserver.common.Result;
+import com.example.ivsserver.common.RngUtil;
 import com.example.ivsserver.entity.warehouse;
 import com.example.ivsserver.mapper.warehouseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class warehouseController {
 
     @Autowired
@@ -24,6 +23,17 @@ public class warehouseController {
 
     @RequestMapping(value = "/addWarehouse",method = RequestMethod.POST)
     public Result<?> addWarehouse(@RequestBody warehouse warehouse){
+        //随机ID生成检测
+        String Check;
+        while(true){
+            Check = RngUtil.randomAlphabetic();
+            warehouse warehouseCheck = warehouseMapper.selectWarehouse(Check);
+            if(warehouseCheck==null){
+                break;
+            }
+        }
+        warehouse.setGoods_id(Check);
+
         warehouseMapper.addWarehouse(warehouse);
         return Result.success();
     }

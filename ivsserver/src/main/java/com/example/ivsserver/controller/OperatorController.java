@@ -2,6 +2,7 @@ package com.example.ivsserver.controller;
 
 
 import com.example.ivsserver.common.Result;
+import com.example.ivsserver.common.RngUtil;
 import com.example.ivsserver.entity.operator;
 import com.example.ivsserver.mapper.operatorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,28 @@ public class OperatorController {
                 }
             }
         return Result.success(list);
+    }
+
+    @RequestMapping(value = "/addOperator",method = RequestMethod.POST)
+    public Result<?> addOperator(@RequestBody operator operator){
+        //随机ID生成检测
+        String Check;
+        while(true){
+            Check = RngUtil.randomAlphabetic();
+            operator operatorCheck = operatorMapper.selectOperator(Check);
+            if(operatorCheck==null){
+                break;
+            }
+        }
+        if(operator.getState().equals("启用")){
+            operator.setState("1");
+        } else if (operator.getState().equals("停用")) {
+            operator.setState("0");
+        }
+        operator.setOperator_id(Check);
+
+        operatorMapper.addOperator(operator);
+        return Result.success();
     }
 
     @RequestMapping(value = "/deleteOperator",method = RequestMethod.GET)

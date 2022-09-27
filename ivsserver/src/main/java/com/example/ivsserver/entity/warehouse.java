@@ -6,7 +6,7 @@ import lombok.Data;
 public class warehouse {
 
     private String goods_id;
-    private String name;
+    private String goods_name;
     private int quantity;
 
 }

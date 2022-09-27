@@ -7,28 +7,32 @@
   border-radius: 10px;
 
   ">
-    <div style="height: 60px;">
-      <h1 style="float: left;margin-top: 20px;margin-left: 40px">客户信息</h1>
+    <div style="height: 50px;width: 90%;line-height: 50px;margin: auto" >
+      <p style="font-size: 25px;font-weight: bold">客户信息</p>
 
     </div>
-    <div style="border-bottom: 4px lightgray solid;height: 60px ;" >
-      <el-input v-model="search" placeholder="请输入关键字" size="large" style="width: 20%;float: left;margin-left: 2%" clearable/>
-      <el-button size="large" type="primary" style="float: left;margin-left: 1%" @click="load">查询</el-button>
-      <el-button type="primary" size="large" style="float: right; margin-right: 5%;" @click="add" >创建</el-button>
+    <div style="border-bottom: 4px lightgray solid;height: 70px ;" >
+      <div style="width: 100%;margin: auto;line-height: 70px;text-align: left">
+        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>
+        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>
+        <el-button type="primary" size="large" @click="add" >创建</el-button>
+      </div>
+
     </div>
+
 
     <el-table
         :data="tableData"
         style="width: 100%"
     >
-      <el-table-column prop="clientNo" label="编号" width="100" />
-      <el-table-column prop="clientName" label="客户名称"  />
-      <el-table-column prop="address" label="客户地址" />
-      <el-table-column prop="telephone" label="客户电话" width="200"/>
+      <el-table-column prop="client_id" label="编号" width="200" />
+      <el-table-column prop="client_name" label="客户名称"  />
+      <el-table-column prop="client_address" label="客户地址" />
+      <el-table-column prop="client_phone" label="客户电话" width="200"/>
       <el-table-column width="200">
         <template #default="scope">
           <el-button  type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-popconfirm title="你确定要删除吗?" @confirm="handleDelete(scope.row.clientNo)">
+          <el-popconfirm title="你确定要删除吗?" @confirm="handleDelete(scope.row.client_id)">
             <template #reference>
               <el-button  type="danger"  >删除</el-button>
             </template>
@@ -51,13 +55,13 @@
     >
       <el-form  :model="form" label-width="120px">
         <el-form-item label="客户名称">
-          <el-input v-model="form.clientName" />
+          <el-input v-model="form.client_name" />
         </el-form-item>
         <el-form-item label="客户地址">
-          <el-input v-model="form.address" />
+          <el-input v-model="form.client_address" />
         </el-form-item>
         <el-form-item label="客户电话">
-          <el-input v-model="form.telephone" />
+          <el-input v-model="form.client_phone" />
         </el-form-item>
 
       </el-form>
@@ -82,7 +86,12 @@ import request from "@/utils/request";
 export default {
     data(){
       return {
-        form:{},
+        form:{
+          client_id:'',
+          client_name:'',
+          client_address:'',
+          client_phone:''
+        },
         dialogVisible : false,
         search: '',
         tableData:[
@@ -101,8 +110,8 @@ export default {
 
       },
       save(){
-        if(this.form.clientNo){  //更新
-          request.put('/client_infomation',this.form).then(res =>{
+        if(this.form.client_id){  //更新
+          request.put('/updateClient',this.form).then(res =>{
             console.log(res)
             if(res.code === '0'){
               this.$message({
@@ -115,10 +124,11 @@ export default {
                 message: res.msg
               })
             }
+            this.load()
           })
-          this.load()
-        }else{
-          request.post('/client_infomation',this.form).then(res =>{
+
+        }else{  //创建
+          request.post('/addClient',this.form).then(res =>{
             console.log(res)
             if(res.code === '0'){
               this.$message({
@@ -131,19 +141,15 @@ export default {
                 message: res.msg
               })
             }
+            this.load()
           })
-          this.load()
+
         }
         this.dialogVisible = false
       },
       load(){
-        request.get('/client_infomation',{
-          params: {
-            search: this.search
-          }
-
-        }).then(res=>{
-          this.tableData = res.data.records
+        request.get('/getInfoClient').then(res=>{
+          this.tableData = res.data
         })
       },
 
@@ -151,9 +157,12 @@ export default {
         this.form = JSON.parse(JSON.stringify(row))
         this.dialogVisible = true;
       },
-      handleDelete(clientNo){
-        console.log(clientNo)
-        request.delete("/client_infomation/" + clientNo).then(res=>{
+      handleDelete(client_id){
+        console.log(client_id)
+        request.get("/deleteClient",{
+          params:
+              {client_id: client_id}
+        }).then(res=>{
               if(res.code === '0'){
                 this.$message({
                   type: "success",
@@ -165,8 +174,9 @@ export default {
                   message: res.msg
                 })
               }
+          this.load()
             })
-        this.load()
+
 
       }
     },
