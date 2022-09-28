@@ -7,47 +7,44 @@
   border-radius: 10px;
 
   ">
-    <div style="height: 60px;">
-      <h1 style="float: left;margin-top: 20px;margin-left: 40px">销货单</h1>
+    <div style="height: 50px;width: 90%;line-height: 50px;margin: auto" >
+      <p style="font-size: 25px;font-weight: bold">销售订单信息</p>
 
     </div>
-    <div style="border-bottom: 4px lightgray solid;height: 60px ;" >
-      <el-input v-model="search" placeholder="请输入关键字" size="large" style="width: 20%;float: left;margin-left: 2%" />
-      <el-button size="large" type="primary" style="float: left;margin-left: 1%">查询</el-button>
-      <el-button type="primary" size="large" style="float: right; margin-right: 5%;  " >创建</el-button>
-    </div>
+<!--    <div style="border-bottom: 4px lightgray solid;height: 70px ;" >-->
+<!--      <div style="width: 100%;margin: auto;line-height: 70px;text-align: left">-->
+<!--        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>-->
+<!--        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>-->
+<!--        <el-button type="primary" size="large" style="margin-left: 30px" @click="add" >创建</el-button>-->
+<!--      </div>-->
 
+<!--    </div>-->
 
-
-    <el-table :data="tableData"  style="width: 95%;margin: auto"
-              :default-sort="{ prop: 'date', order: 'descending' }" show-summary sum-text="合计">
+    <el-table :data="tableData"  style="width: 95%;margin: auto;background-color: #ffffff"
+              :default-sort="{ prop: 'date', order: 'descending' }"  >
       <el-table-column
           type="expand"
           width="80"
       >
         <template #default="props">
-          <div style="width: 95%;margin: auto;"  >
-            <el-table :data="props.row.list" >
-              <el-table-column label="货物名称" prop="goodsname" width="250"/>
-              <el-table-column label="仓库操作序号" prop="operation" />
-              <el-table-column label="订购单价" prop="unitprice" width="200"/>
-              <el-table-column label="订购数量" prop="count" width="200" />
-              <el-table-column label="订购价格" prop="cost" width="200" />
+          <div style="width: 95%;margin: auto">
+            <el-table :data="props.row.salesInfoList">
+              <el-table-column label="货物名称" prop="goods_name" />
+              <el-table-column label="销售单价" prop="unit_price" />
+              <el-table-column label="销售数量" prop="count" />
             </el-table>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="日期" prop="date" sortable width="200"/>
-      <el-table-column label="订购合同编号" prop="SalesNo" />
-      <el-table-column label="客户" prop="client" />
-      <el-table-column label="金额" prop="sumcost" width="120"/>
-      <el-table-column width="120">
-        <el-popconfirm title="确认删除吗？">
-          <template #reference>
-            <el-button  type="danger" size="small" @click="handleClick">删除</el-button>
-          </template>
+      <el-table-column label="日期" prop="sale_date" sortable width="200" />
+      <el-table-column label="销售合同编号" prop="sales_contract_id" />
+      <el-table-column label="客户" prop="client_name" />
+      <el-table-column label="操作员名称" prop="operator_name" />
+      <el-table-column width="140">
 
-        </el-popconfirm>
+        <el-button  type="primary" size="small" @click="handleClick">修改</el-button>
+        <el-button  type="danger" size="small" @click="handleClick">删除</el-button>
+
       </el-table-column>
 
     </el-table>
@@ -56,102 +53,113 @@
 </template>
 
 <script>
-
-
-
+import request from "@/utils/request";
 
 export default {
   data(){
     return{
+      form:{
+        sales_contract_id: "",
+        operator_name: "",
+        sale_date: "",
+        client_name: "",
+        salesInfoList:[
+          {
+            goods_name: "",
+            count: '',
+            unit_price: ""
+          }
+        ]
+      },
       search:'',
       tableData:[
-        {
-          date: '2016-05-01',
-          supplier: 'Tom',
-          purchase: 'California',
-          sumcost: 1202,
-          list: [
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-          ],
-        },
-        {
-          date: '2016-05-01',
-          supplier: 'Tom',
-          purchase: 'California',
-          sumcost: 1202,
-          list: [
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-          ],
-        },
-        {
-          date: '2016-05-01',
-          supplier: 'Tom',
-          purchase: 'California',
-          sumcost: 1202,
-          list: [
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-            {
-              goodsname: 'Jerry',
-              unitprice: 'California',
-              count: 'San Francisco',
-              cost: '3650 21st St, San Francisco',
-            },
-          ],
-        },
+
       ]
 
     }
   },
+  created() {
+    this.load()
+  },
   methods:{
-    handleClick(){
-      console.log('click')
+    add(){
+      this.dialogVisible = true
+      this.form = {
+      }
+
+    },
+    save(){
+      if(this.form.client_id){  //更新
+        request.put('/updatePurchase',this.form).then(res =>{
+          console.log(res)
+          if(res.code === '0'){
+            this.$message({
+              type: "success",
+              message: "更新成功"
+            })
+          }else {
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
+          this.load()
+        })
+
+      }else{  //创建
+        request.post('/addPurchase',this.form).then(res =>{
+          console.log(res)
+          if(res.code === '0'){
+            this.$message({
+              type: "success",
+              message: "创建成功"
+            })
+          }else {
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
+          this.load()
+        })
+
+      }
+      this.dialogVisible = false
+    },
+    load(){
+      request.get('/getInfoSales').then(res=>{
+        this.tableData = res.data
+
+      })
+    },
+
+    handleEdit(row){
+      this.form = JSON.parse(JSON.stringify(row))
+      this.dialogVisible = true;
+    },
+    handleDelete(client_id){
+      console.log(client_id)
+      request.get("/deletePurchase",{
+        params:
+            {client_id: client_id}
+      }).then(res=>{
+        if(res.code === '0'){
+          this.$message({
+            type: "success",
+            message: "删除成功"
+          })
+        }else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+        this.load()
+      })
+
+
     }
-  }
+  },
 
 
 }

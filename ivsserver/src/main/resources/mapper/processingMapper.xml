@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ivsserver.mapper.processingMapper">
+
+    <select id="selectGoodsPurchase" parameterType="String" resultType="Map">
+        SELECT count,supplier_name,delivery_date FROM purchase,supplier,purchase_order WHERE
+
+                purchase.goods_id = (SELECT goods_id FROM warehouse WHERE goods_name = #{goods_name})
+                                                                                         AND
+                supplier.supplier_id in (SELECT supplier_id FROM purchase_order WHERE
+                    purchase_contract_id in (SELECT purchase_contract_id FROM purchase WHERE purchase.goods_id = (SELECT goods_id FROM warehouse WHERE goods_name = #{goods_name}) ) )
+                                                                                         AND
+                purchase_order.purchase_contract_id in (SELECT purchase_contract_id FROM purchase WHERE purchase.goods_id = (SELECT goods_id FROM warehouse WHERE goods_name = #{goods_name}) )
+
+    </select>
+
+    <select id="selectGoodsSales" parameterType="String" resultType="Map">
+        SELECT sale_date,count,quantity FROM sales,warehouse,sales_order WHERE
+            goods_name = #{goods_name} AND
+            sales_order.sales_contract_id in (SELECT sales_contract_id FROM sales WHERE
+            sales.goods_id = (SELECT goods_id FROM warehouse WHERE goods_name = #{goods_name}))
+    </select>
+
+    <select id="selectSupplierPurchase" parameterType="String" resultType="Map">
+        SELECT delivery_date,goods_name,purchase_order.purchase_contract_id FROM purchase_order,warehouse
+        WHERE purchase_order.purchase_contract_id in
+            (SELECT purchase_order.purchase_contract_id FROM purchase_order WHERE purchase_order.supplier_id =
+            (SELECT supplier_id FROM supplier WHERE supplier_name= #{supplier_name})) AND
+            warehouse.goods_id = (SELECT goods_id FROM purchase WHERE purchase.purchase_contract_id in
+            (SELECT purchase_order.purchase_contract_id FROM purchase_order WHERE purchase_order.supplier_id =
+            (SELECT supplier_id FROM supplier WHERE supplier_name= #{supplier_name})))
+    </select>
+
+    <select id="selectSupplierGoods" parameterType="String" resultType="Map">
+        SELECT supplier_name,supplier_address,supplier_phone FROM supplier
+                             WHERE supplier_id in
+                            (SELECT supplier_id FROM purchase_order WHERE purchase_order.purchase_contract_id in
+                            (SELECT purchase.purchase_contract_id FROM purchase WHERE
+                purchase.goods_id = (SELECT goods_id from warehouse WHERE goods_name = #{goods_name})))
+    </select>
+
+
+</mapper>

@@ -13,9 +13,9 @@
     </div>
     <div style="border-bottom: 4px lightgray solid;height: 70px ;" >
       <div style="width: 100%;margin: auto;line-height: 70px;text-align: left">
-        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>
-        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>
-        <el-button type="primary" size="large" @click="add" >创建</el-button>
+<!--        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>-->
+<!--        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>-->
+        <el-button type="primary" size="large" style="margin-left: 30px" @click="add" >创建</el-button>
       </div>
 
     </div>

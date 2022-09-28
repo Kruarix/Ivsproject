@@ -109,7 +109,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
           setTimeout(()=>{
             //需要延迟的代码 :3秒后延迟跳转到首页，可以加提示什么的
             router.push({
-              name:"takeOver"
+              name:"processingCenter"
             });
             //延迟时间
           },1500)

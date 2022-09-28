@@ -7,7 +7,7 @@ import SalesOrders from "@/views/SalesOrders";
 import Supplier from "@/views/Supplier"
 import Warehouse from "@/views/Warehouse"
 import TakeOver from "@/components/TakeOver";
-import Home from "@/views/Home";
+import ProcessingCenter from "@/views/ProcessingCenter"
 
 const routes = [
   {
@@ -24,6 +24,13 @@ const routes = [
       LoginHome: TakeOver
     },
     children: [
+      {
+        path: '/processingCenter',
+        name: 'processingCenter',
+        components: {
+          MainBody: ProcessingCenter
+        }
+      },
       {
         path: '/client',
         name: 'client',
@@ -64,13 +71,6 @@ const routes = [
         name: 'warehouse',
         components: {
           MainBody: Warehouse
-        }
-      },
-      {
-        path: '/home',
-        name: 'home',
-        components: {
-          MainBody: Home
         }
       },
     ]

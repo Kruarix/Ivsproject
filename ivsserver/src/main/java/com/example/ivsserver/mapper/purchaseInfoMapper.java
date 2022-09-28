@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public interface purchaseInfoMapper {
 
-    List<Map<purchaseOrder,Objects>> getInfoPurchase();
+    List<purchaseInfo> getInfoPurchase();
+
+    List<purchaseInfoList> getInfoPurchaseList(String purchase_contract_id);
 
 }

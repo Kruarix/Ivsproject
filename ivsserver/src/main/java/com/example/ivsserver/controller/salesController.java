@@ -14,11 +14,11 @@ public class salesController {
     salesMapper salesMapper;
 
 
-    @RequestMapping(value = "/getInfoSales",method = RequestMethod.GET)
-    public Result<?> getInfoSales(){
-        List<sales> list = salesMapper.getInfoSales();
-        return Result.success(list);
-    }
+//    @RequestMapping(value = "/getInfoSales",method = RequestMethod.GET)
+//    public Result<?> getInfoSales(){
+//        List<sales> list = salesMapper.getInfoSales();
+//        return Result.success(list);
+//    }
 
     @RequestMapping(value = "/addSales",method = RequestMethod.POST)
     public Result<?> addSales(@RequestBody sales sales){

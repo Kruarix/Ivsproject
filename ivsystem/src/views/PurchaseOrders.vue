@@ -11,29 +11,27 @@
       <p style="font-size: 25px;font-weight: bold">进货订单信息</p>
 
     </div>
-    <div style="border-bottom: 4px lightgray solid;height: 70px ;" >
-      <div style="width: 100%;margin: auto;line-height: 70px;text-align: left">
-        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>
-        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>
-        <el-button type="primary" size="large" @click="add" >创建</el-button>
-      </div>
+<!--    <div style="border-bottom: 4px lightgray solid;height: 70px ;" >-->
+<!--      <div style="width: 100%;margin: auto;line-height: 70px;text-align: left">-->
+<!--        <el-input v-model="search" placeholder="请输入关键字" size="large"  style="width: 25%;margin-left: 20px"  clearable/>-->
+<!--        <el-button size="large" type="primary" style="margin-left: 30px" @click="load">查询</el-button>-->
+<!--        <el-button type="primary" size="large" style="margin-left: 30px" @click="add" >创建</el-button>-->
+<!--      </div>-->
 
-    </div>
+<!--    </div>-->
 
     <el-table :data="tableData"  style="width: 95%;margin: auto;background-color: #ffffff"
-              :default-sort="{ prop: 'date', order: 'descending' }" show-summary sum-text="合计">
+              :default-sort="{ prop: 'date', order: 'descending' }" >
       <el-table-column
           type="expand"
           width="80"
       >
         <template #default="props">
           <div style="width: 95%;margin: auto">
-            <el-table :data="tableData">
-              <el-table-column label="货物名称" prop="goods_name" width="250"/>
-              <el-table-column label="操作员名称" prop="operator_name" />
-              <el-table-column label="采购单价" prop="unit_price" width="200"/>
-              <el-table-column label="采购数量" prop="count" width="200"/>
-              <el-table-column label="采购价格" prop="cost" width="200"/>
+            <el-table :data="props.row.purchaseInfoList">
+              <el-table-column label="货物名称" prop="goods_name" />
+              <el-table-column label="采购单价" prop="unit_price" />
+              <el-table-column label="采购数量" prop="count" />
             </el-table>
           </div>
         </template>
@@ -41,7 +39,7 @@
       <el-table-column label="日期" prop="delivery_date" sortable width="200" />
       <el-table-column label="采购合同编号" prop="purchase_contract_id" />
       <el-table-column label="供应商" prop="supplier_name" />
-      <el-table-column label="金额" prop="sum_cost" width="120"/>
+      <el-table-column label="操作员名称" prop="operator_name" />
       <el-table-column width="140">
 
           <el-button  type="primary" size="small" @click="handleClick">修改</el-button>
@@ -62,13 +60,17 @@ export default {
   data(){
     return{
       form:{
+        purchase_contract_id: "",
         operator_name: "",
-        goods_name: "",
         delivery_date: "",
-        count: '',
         supplier_name: "",
-        unit_price: '',
-        purchase_contract_id: ""
+        purchaseInfoList:[
+            {
+              goods_name: "",
+              count: '',
+              unit_price: ""
+            }
+        ]
       },
       search:'',
       tableData:[
@@ -128,6 +130,7 @@ export default {
     load(){
       request.get('/getInfoPurchase').then(res=>{
         this.tableData = res.data
+
       })
     },
 

@@ -26,13 +26,19 @@
 <!--        where purchase_contract_id = #{purchase_contract_id}-->
 <!--    </select>-->
 
-    <select id="getInfoPurchase"  resultType="Map">
-        select purchase_order.purchase_contract_id,purchase_order.delivery_date,supplier.supplier_name,operator.operator_name,warehouse.goods_name,count,unit_price
-               from purchase,purchase_order,warehouse,operator,supplier
-                 where (purchase_order.purchase_contract_id = purchase.purchase_contract_id and
-                       purchase.goods_id = warehouse.goods_id and
-                       purchase_order.operator_id = operator.operator_id and
+    <select id="getInfoPurchase"  resultType="com.example.ivsserver.entity.purchaseInfo">
+        select purchase_order.purchase_contract_id,purchase_order.delivery_date,supplier.supplier_name,operator.operator_name
+               from purchase_order,operator,supplier
+                 where (purchase_order.operator_id = operator.operator_id and
                        purchase_order.supplier_id = supplier.supplier_id )
+
+    </select>
+
+    <select id="getInfoPurchaseList"  parameterType="String" resultType="com.example.ivsserver.entity.purchaseInfoList">
+        select goods_name,count,unit_price
+        from purchase,warehouse
+        where purchase.purchase_contract_id = #{purchase_contract_id} AND
+            purchase.goods_id =  warehouse.goods_id
 
     </select>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.ivsserver.mapper.salesInfoMapper">
+
+    <select id="getInfoSales"  resultType="com.example.ivsserver.entity.salesInfo">
+        select sales_order.sales_contract_id,sales_order.sale_date,client.client_name,operator.operator_name
+        from sales_order,operator,client
+        where (sales_order.operator_id = operator.operator_id and
+               sales_order.client_id = client.client_id )
+
+    </select>
+
+    <select id="getInfoSalesList"  parameterType="String" resultType="com.example.ivsserver.entity.salesInfoList">
+        select goods_name,count,unit_price
+        from sales,warehouse
+        where sales.sales_contract_id = #{sales_contract_id} AND
+            sales.goods_id = warehouse.goods_id
+
+    </select>
+</mapper>
