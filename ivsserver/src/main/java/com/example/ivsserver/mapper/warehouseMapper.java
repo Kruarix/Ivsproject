@@ -1,9 +1,10 @@
 package com.example.ivsserver.mapper;
 
 import com.example.ivsserver.entity.warehouse;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
+@Mapper
 public interface warehouseMapper {
 
     void addWarehouse(warehouse warehouse);
